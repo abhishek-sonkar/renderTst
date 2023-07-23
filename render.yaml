@@ -1,22 +1,20 @@
-version: 0.3
+version: 0.4
 
 services:
   - name: mysqldb
-    type: docker
+    type: service
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: doubtsuser
     ports: []
     instanceType: micro
-    privateNetwork: true
 
   - name: dbts-ovrflo-app
-    type: docker
+    type: service
     buildCommand: docker build -t my-springboot-app .
     startCommand: docker run -p 8080:8080 --name dbts-ovrflo-app --network springboot-mysql-net my-springboot-app
     instanceType: micro
-    privateNetwork: true
     dependencies:
       - service: mysqldb
 
